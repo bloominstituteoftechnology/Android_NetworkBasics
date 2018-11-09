@@ -86,30 +86,3 @@ Now we'll build an activity to use the tools we just wrote
 3. Build a `ListAdapter` with your `ArrayList` and attach it to your `RecyclerView` as we've done before
 4. In your `AsyncTask`, after you add data to you're list you'll have to call `notifyDataSetChanged` on your list adapter to get it to reload the data
 5. Test your app
-
-## Challenge
-Build a details page to download additional information as well as the image to display. Here is a partial list of instructions to do so.
-
-1. Add the keywords `implements Parcelable` to your `ImageData` object
-2. Override the `writeToParcel` method, accepting a `Parcel` object and an `int`
-3. call `parcel.write`*Type* passing in all of your current members.
-4. Write a constructor which accepts a `Parcel` and calls `parcel.read`*Type* be sure to read in the same order you wrote the members
-5. Click the error message in the class signature and add all unimplemented methods and leave the defaults
-
-1. run test URL `http://hubblesite.org/api/v3/image/4238` in postman
-2. add data members for description, credits, imageUrl (String), and image (Bitmap)
-3. write getters for these members
-4. write a method called `addDetails(JSONObject)`
-  * this method will pull the data for these new data members (except for the image) and store it
-  * write a seperate method to get the file extension of the given file using `this.url.substring(this.url.lastIndexOf('.'))`
-  * use the previous method to determine which of the file urls to store. They must end in a file extension from this array `public static final String[] EXTENSIONS = new String[] { "bmp", "gif", "jpg", "jpeg", "png", "webp", "heic", "heif" };` store the first one that matches
-5. write a static method in your HubbleDao which will accept an int, append it to `http://hubblesite.org/api/v3/image/` and perform a get request on that URL to return the results
-6. in your `NetworkAdapter` write a static method called `getImage` which accepts a url string and returns a  `Bitmap` object
-7. copy the code from your `httpRequest` method into this method.
-8. Change your result variable to a `Bitmap`
-9. after obtaining your `InputStream` object, delete everything in the try block
-10. take the `InputStream` and pass it into the method `BitmapFactory.decodeStream(input)` store that result in your result bitmap and return it
-11. in your `HubbleDao` class, write a method to accept a url, pass it to the `getImage` method and returns the result
-12. in the `DetailsActivity`, create an asynctask which accepts an int id value from the imageData object, it won't pass anything (Void, Void)
-13.
-
