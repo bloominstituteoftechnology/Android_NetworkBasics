@@ -16,7 +16,7 @@ public class NetworkAdapter {
     final static int TIMEOUT = 3000;
 
     public static String httpRequest(String urlString) {
-        String result = "";
+        String result = null;
         InputStream stream = null;
         HttpURLConnection connection = null;
 
