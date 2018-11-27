@@ -10,6 +10,8 @@ import java.net.URL;
 
 public class NetworkAdapter {
 
+    private final static int TIMEOUT = 3000;
+
     public static String httpRequest (String urlString) {
         String result = "";
         HttpURLConnection connection = null;
@@ -18,6 +20,8 @@ public class NetworkAdapter {
         try {
             URL url = new URL(urlString);
             connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(TIMEOUT);
+            connection.setConnectTimeout(TIMEOUT);
 
             connection.connect();
 
