@@ -1,6 +1,7 @@
 package com.example.joshh.android_networkbasics;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,10 +17,10 @@ public class XkcdDao {
     private static XkcdComic getComic(String url){
         XkcdComic xkcdComic = null;
         try {
-            JSONObject jsonObject = new JSONObject(NetworkAdapter.httpRequest(url, ""));
+            JSONObject jsonObject = new JSONObject(NetworkAdapter.httpRequest(url));
             xkcdComic = new XkcdComic(jsonObject);
-            Bitmap imageBitMap = NetworkAdapter.httpImageRequest(url);
-            xkcdComic.setImg(imageBitMap.toString());
+            Bitmap imageBitMap = NetworkAdapter.httpImageRequest(xkcdComic.getImg());
+            xkcdComic.setBitMap(imageBitMap);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -27,6 +28,7 @@ public class XkcdDao {
     }
 
     public static XkcdComic getRecentComic(){
+        Log.i("REQUESTURL", RECENT_COMIC);
         XkcdComic xkcdComic = getComic(RECENT_COMIC);
         maxComicNumber = xkcdComic.getNum();
         return xkcdComic;

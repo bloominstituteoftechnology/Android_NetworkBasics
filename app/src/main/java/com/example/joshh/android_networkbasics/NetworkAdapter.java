@@ -2,6 +2,7 @@ package com.example.joshh.android_networkbasics;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class NetworkAdapter {
 
     private final static int TIMEOUT = 3000;
 
-    public static String httpRequest(String urlString, String requestType){
+    public static String httpRequest(String urlString){
         String result = "";
         InputStream stream = null;
         HttpURLConnection connection = null;
