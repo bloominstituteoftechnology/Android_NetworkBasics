@@ -10,7 +10,8 @@ import java.io.IOException;
 public class XkcdDao {
     private static final String BASE_URL = "http://xkcd.com/";
     private static final String IMAGE_URL = "https://xkcd.com/info.0.json";
-    private static final String RECENT_COMIC = "https://xkcd.com/%d/info.0.json";
+    private static final String SPECIFIC_COMIC = "https://xkcd.com/%d/info.0.json";
+    private static XkcdComic current;
 
     private static XkcdComic getComic(String url){
         XkcdComic comic = null;
@@ -33,12 +34,25 @@ public class XkcdDao {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        current = comic;
         return comic;
     }
 
     public static XkcdComic getRecentComic() {
         XkcdComic comic = null;
-        comic = getComic(RECENT_COMIC);
+        comic = getComic(IMAGE_URL);
+        return comic;
+    }
+
+    public static XkcdComic getNextComic() {
+        XkcdComic comic = null;
+        int num;
+        num = current.getNum();
+        if (num >= 0) {
+            num ++ ;
+            String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(num));
+            comic = getComic(url);
+        }
         return comic;
     }
 }
