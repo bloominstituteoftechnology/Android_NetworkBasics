@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private XkcdComic prevComic;
     private XkcdComic currentComic;
 
+    private int newestComic;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         comicAlt = findViewById(R.id.comic_alt);
         comicImage = findViewById(R.id.comic_image);
 
-        findViewById(R.id.navigation_home).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.previous_comic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 (new Thread(new Runnable() {
@@ -53,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.navigation_dashboard).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.random_comic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 (new Thread(new Runnable() {
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.navigation_notifications).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.next_comic).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 (new Thread(new Runnable() {
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 recentXkcdComic = XkcdDao.getRecentComic();
+                newestComic = XkcdDao.getRecentComic().getNum();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -107,18 +110,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateUI(XkcdComic xkcdComic){
-        comicTitle.setText(xkcdComic.getTitle());
+        comicTitle.setText(xkcdComic.getTitle() + " (Comic #" + xkcdComic.getNum() + ")");
         comicAlt.setText(xkcdComic.getAlt());
         comicImage.setImageBitmap(xkcdComic.getBitMap());
-        if(xkcdComic.getNum() == recentXkcdComic.getNum()){
-            findViewById(R.id.navigation_notifications).setVisibility(View.INVISIBLE);
+        if(xkcdComic.getNum() == newestComic){
+            findViewById(R.id.next_comic).setVisibility(View.INVISIBLE);
         }else{
-            findViewById(R.id.navigation_notifications).setVisibility(View.VISIBLE);
+            findViewById(R.id.next_comic).setVisibility(View.VISIBLE);
         }
         if(xkcdComic.getNum() == 1){
-            findViewById(R.id.navigation_home).setVisibility(View.INVISIBLE);
+            findViewById(R.id.previous_comic).setVisibility(View.INVISIBLE);
         }else{
-            findViewById(R.id.navigation_home).setVisibility(View.VISIBLE);
+            findViewById(R.id.previous_comic).setVisibility(View.VISIBLE);
         }
     }
 
