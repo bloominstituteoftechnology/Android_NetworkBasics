@@ -12,7 +12,7 @@ public class XkcdDao {
     private static final String IMAGE_URL = "https://xkcd.com/info.0.json";
     private static final String SPECIFIC_COMIC = "https://xkcd.com/%d/info.0.json";
     private static XkcdComic current;
-    private static final int MAX = 2077;
+    public static final int MAX = 2077;
 
     private static XkcdComic getComic(String url){
         XkcdComic comic = null;
