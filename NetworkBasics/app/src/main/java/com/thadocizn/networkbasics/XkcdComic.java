@@ -1,5 +1,7 @@
 package com.thadocizn.networkbasics;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,12 +18,21 @@ public class XkcdComic {
     private  String img;
     private  String title;
     private  String day;
+    private Bitmap image;
 
     public XkcdComic() {
     }
 
     public String getMonth() {
         return month;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
+
+    public void setImage(Bitmap image) {
+        this.image = image;
     }
 
     public int getNum() {
