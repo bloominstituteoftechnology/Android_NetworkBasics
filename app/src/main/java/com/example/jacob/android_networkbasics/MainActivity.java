@@ -15,9 +15,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String NEXT = "Next";
     public static final String PREVIOUS = "Previous";
     public static final String RANDOM = "Random";
-    private TextView mTextMessage;
-    offloadTask task;
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,12 +39,12 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -64,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public class offloadTask extends AsyncTask<String, Integer, XkcdComic> {
 
         @Override
@@ -72,6 +68,19 @@ public class MainActivity extends AppCompatActivity {
             if (comic != null) {
                 ((TextView) findViewById(R.id.text_title)).setText(comic.getTitle());
                 ((ImageView) findViewById(R.id.image_comic)).setImageBitmap(comic.getBitmap());
+
+                if (comic.getNum() == 1) {
+                    BottomNavigationView navigation = findViewById(R.id.navigation);
+                    navigation.getMenu().getItem(0).setEnabled(false);
+                } else if (comic.getNum() == XkcdDao.maxComicNumber) {
+                    BottomNavigationView navigation = findViewById(R.id.navigation);
+                    navigation.getMenu().getItem(2).setEnabled(false);
+                } else {
+                    BottomNavigationView navigation = findViewById(R.id.navigation);
+                    navigation.getMenu().getItem(0).setEnabled(true);
+                    navigation.getMenu().getItem(2).setEnabled(true);
+                }
+
             }
         }
 
