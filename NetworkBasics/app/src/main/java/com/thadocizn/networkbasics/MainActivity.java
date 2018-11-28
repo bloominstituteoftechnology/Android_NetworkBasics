@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    NetworkAdapter.httpGetRequest(HTTP_REQUEST, "get");
+                    NetworkAdapter.httpGetRequest(HTTP_REQUEST);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -46,7 +46,7 @@ public class NetworkAdapter {
         return bmResult;
     }
 
-    public static String httpGetRequest(String urlString, String request) throws IOException {
+    public static String httpGetRequest(String urlString) throws IOException {
         String strResult = "";
         InputStream inputStream = null;
         HttpURLConnection httpURLConnection = null;
