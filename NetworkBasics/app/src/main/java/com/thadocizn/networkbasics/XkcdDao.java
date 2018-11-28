@@ -12,6 +12,7 @@ public class XkcdDao {
     private static final String IMAGE_URL = "https://xkcd.com/info.0.json";
     private static final String SPECIFIC_COMIC = "https://xkcd.com/%d/info.0.json";
     private static XkcdComic current;
+    private static final int MAX = 2077;
 
     private static XkcdComic getComic(String url){
         XkcdComic comic = null;
@@ -64,6 +65,14 @@ public class XkcdDao {
             String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(num));
             comic = getComic(url);
         }
+        return comic;
+    }
+
+    public static XkcdComic getRandomComic(){
+        XkcdComic comic = null;
+        String randomNumber = String.valueOf((Math.round(Math.random()* MAX + 1)));
+        String url = SPECIFIC_COMIC.replace("%d/", randomNumber);
+        comic = getComic(url);
         return comic;
     }
 }
