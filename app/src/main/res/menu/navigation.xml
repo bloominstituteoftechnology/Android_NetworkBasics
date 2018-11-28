@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/button_back"
+        android:icon="@drawable/ic_back"
+        android:title="@string/navigate_back" />
+
+    <item
+        android:id="@+id/button_random"
+        android:icon="@drawable/ic_random"
+        android:title="@string/get_random" />
+
+    <item
+        android:id="@+id/button_forward"
+        android:icon="@drawable/ic_forward"
+        android:title="@string/navigate_forward" />
+
+</menu>
