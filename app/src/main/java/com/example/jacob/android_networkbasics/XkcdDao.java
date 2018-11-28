@@ -11,6 +11,7 @@ public class XkcdDao {
     private final static String RECENT_COMIC = BASE_URL + END_URL;
     private final static String SPECIFIC_COMIC = BASE_URL + "%d/" + END_URL;
     public static int maxComicNumber;
+    public static XkcdComic currentComic;
 
 
 
@@ -36,6 +37,7 @@ public class XkcdDao {
             e.printStackTrace();
             return comic;
         }
+        currentComic = comic;
         return comic;
     }
 
@@ -46,7 +48,7 @@ public class XkcdDao {
         return comic;
     }
 
-    public static XkcdComic getNextComic(XkcdComic currentComic) {
+    public static XkcdComic getNextComic() {
         XkcdComic comic = null;
         int comicNum = -1;
         comicNum = currentComic.getNum();
@@ -58,7 +60,7 @@ public class XkcdDao {
         return comic;
     }
 
-    public static XkcdComic getPreviousComic(XkcdComic currentComic) {
+    public static XkcdComic getPreviousComic() {
         XkcdComic comic = null;
         int comicNum = -1;
         comicNum = currentComic.getNum();

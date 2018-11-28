@@ -65,12 +65,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public class offloadTask extends AsyncTask<String, Integer, XkcdComic> {
 
         @Override
         protected void onPostExecute(XkcdComic comic) {
-            if(comic != null) {
+            if (comic != null) {
                 ((TextView) findViewById(R.id.text_title)).setText(comic.getTitle());
                 ((ImageView) findViewById(R.id.image_comic)).setImageBitmap(comic.getBitmap());
             }
@@ -80,19 +79,17 @@ public class MainActivity extends AppCompatActivity {
         protected XkcdComic doInBackground(String... strings) {
             switch (strings[0]) {
                 case RECENT:
-                return XkcdDao.getRecentComic();
+                    return XkcdDao.getRecentComic();
                 case NEXT:
-                    return XkcdDao.getNextComic(null);
+                    return XkcdDao.getNextComic();
                 case PREVIOUS:
-                    return XkcdDao.getPreviousComic(null);
+                    return XkcdDao.getPreviousComic();
                 case RANDOM:
                     return XkcdDao.getRandomComic();
             }
             return null;
         }
     }
-
-
 
 
 }
