@@ -9,7 +9,7 @@ public class XkcdComic {
     private String transcript;
     private String title;
     private String safe_title;
-    private String num;
+    private int num;
     private String news;
     private String alt;
     private String link;
@@ -37,7 +37,7 @@ public class XkcdComic {
             e.printStackTrace();
         }
         try {
-            this.num = json.getString("num");
+            this.num = Integer.parseInt(json.getString("num"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,7 +90,7 @@ public class XkcdComic {
             return safe_title;
         }
 
-        public String getNum () {
+        public int getNum () {
             return num;
         }
 
