@@ -55,4 +55,15 @@ public class XkcdDao {
         }
         return comic;
     }
+
+    public static XkcdComic getPreviousComic() {
+        XkcdComic comic = null;
+        int num = current.getNum();
+        if (num > 0) {
+            num --;
+            String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(num));
+            comic = getComic(url);
+        }
+        return comic;
+    }
 }
