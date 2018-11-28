@@ -5,15 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String RECENT = "Recent";
+    public static final String NEXT = "Next";
+    public static final String PREVIOUS = "Previous";
+    public static final String RANDOM = "Random";
     private TextView mTextMessage;
     offloadTask task;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -21,14 +25,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.button_back:
+                    new offloadTask().execute(PREVIOUS);
+//                    mTextMessage.setText(R.string.navigate_back);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.button_random:
+                    new offloadTask().execute(RANDOM);
+//                    mTextMessage.setText(R.string.get_random);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.button_forward:
+                    new offloadTask().execute(NEXT);
+//                    mTextMessage.setText(R.string.navigate_forward);
                     return true;
             }
             return false;
@@ -44,8 +51,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        task = new offloadTask();
-        task.execute("");
+        new offloadTask().execute(RECENT);
 
 /*        new Thread(new Runnable() {
             @Override
@@ -59,23 +65,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void UpdateUI(XkcdComic comic) {
-        ((TextView) findViewById(R.id.text_title)).setText(comic.getTitle());
-        ((ImageView) findViewById(R.id.image_comic)).setImageBitmap(comic.getBitmap());
-    }
-
 
     public class offloadTask extends AsyncTask<String, Integer, XkcdComic> {
 
         @Override
         protected void onPostExecute(XkcdComic comic) {
-            ((TextView) findViewById(R.id.text_title)).setText(comic.getTitle());
-            ((ImageView) findViewById(R.id.image_comic)).setImageBitmap(comic.getBitmap());
+            if(comic != null) {
+                ((TextView) findViewById(R.id.text_title)).setText(comic.getTitle());
+                ((ImageView) findViewById(R.id.image_comic)).setImageBitmap(comic.getBitmap());
+            }
         }
 
         @Override
         protected XkcdComic doInBackground(String... strings) {
-            return XkcdDao.getRecentComic();
+            switch (strings[0]) {
+                case RECENT:
+                return XkcdDao.getRecentComic();
+                case NEXT:
+                    return XkcdDao.getNextComic(null);
+                case PREVIOUS:
+                    return XkcdDao.getPreviousComic(null);
+                case RANDOM:
+                    return XkcdDao.getRandomComic();
+            }
+            return null;
         }
     }
 

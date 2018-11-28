@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 public class XkcdDao {
     private final static String BASE_URL = "https://xkcd.com/";
-    private final static String END_URL = "info.0.json";
+    private final static String END_URL = "/info.0.json";
     private final static String RECENT_COMIC = BASE_URL + END_URL;
     private final static String SPECIFIC_COMIC = BASE_URL + "%d/" + END_URL;
     public static int maxComicNumber;
@@ -58,7 +58,7 @@ public class XkcdDao {
         return comic;
     }
 
-    public static XkcdComic gePreviousComic(XkcdComic currentComic) {
+    public static XkcdComic getPreviousComic(XkcdComic currentComic) {
         XkcdComic comic = null;
         int comicNum = -1;
         comicNum = currentComic.getNum();
