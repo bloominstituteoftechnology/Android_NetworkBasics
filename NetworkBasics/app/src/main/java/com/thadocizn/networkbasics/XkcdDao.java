@@ -1,5 +1,7 @@
 package com.thadocizn.networkbasics;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,11 +18,27 @@ public class XkcdDao {
             String strUrl = NetworkAdapter.httpGetRequest(url);
             JSONObject jsComic = new JSONObject(strUrl);
             comic = new XkcdComic(jsComic);
+
+            String urlString = comic.getImg();
+            if (urlString != null){
+                Bitmap bitmap;
+                bitmap = NetworkAdapter.httpImageRequest(urlString);
+                if (bitmap != null){
+                    comic.setImage(bitmap);
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return comic;
+    }
+
+    public static XkcdComic getRecentComic() {
+        XkcdComic comic = null;
+        comic = getComic(RECENT_COMIC);
         return comic;
     }
 }
