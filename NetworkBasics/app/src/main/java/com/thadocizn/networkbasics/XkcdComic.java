@@ -20,8 +20,7 @@ public class XkcdComic {
     private  String day;
     private Bitmap image;
 
-    public XkcdComic() {
-    }
+
 
     public String getMonth() {
         return month;

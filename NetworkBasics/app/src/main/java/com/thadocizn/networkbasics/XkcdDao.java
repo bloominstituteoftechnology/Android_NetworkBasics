@@ -1,16 +1,64 @@
 package com.thadocizn.networkbasics;
 
+import android.app.Notification;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
 public class XkcdDao {
-    private static final String BASE_URL = "http://xkcd.com/";
-    private static final String IMAGE_URL = "https://xkcd.com/info.0.json";
-    private static final String SPECIFIC_COMIC = "https://xkcd.com/%d/info.0.json";
+    private final static String BASE_URL = "https://xkcd.com/";
+    private final static String URL_ENDING = "info.0.json";
+    private final static String RECENT_COMIC = BASE_URL + URL_ENDING;
+    private final static String SPECIFIC_COMIC = BASE_URL + "%d/" + URL_ENDING;
+    public static final int MAX = 2077;
+
+    private static XkcdComic getComic(String url){
+        XkcdComic comic = null;
+        try {
+            JSONObject jsonObject = new JSONObject(NetworkAdapter.httpRequest(url));
+            comic = new XkcdComic(jsonObject);
+            Bitmap bitmap = NetworkAdapter.httpImageRequest(comic.getImg());
+            comic.setImage(bitmap);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return comic;
+    }
+
+    public static XkcdComic getRecentComic(){
+        XkcdComic comic = getComic(RECENT_COMIC);
+        return comic;
+    }
+
+    public static XkcdComic getNextComic(XkcdComic comic){
+        int next = comic.getNum() + 1;
+        String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(next));
+        return getComic(url);
+    }
+
+    public static XkcdComic getPreviousComic(XkcdComic xkcdComic){
+        int previous = xkcdComic.getNum() - 1;
+        String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(previous));
+        return getComic(url);
+    }
+
+    public static XkcdComic getRandomComic(){
+        int random = ((int)(Math.random() * MAX) + 1);
+        String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(random));
+        return getComic(url);
+    }
+
+}
+
+/*
+public class XkcdDao {
+    private static final String BASE_URL = "https://xkcd.com/";
+    private static final String URL_ENDING = "info.0.json";
+    private static final String CURRENT_URL = BASE_URL + URL_ENDING;
+    private static final String SPECIFIC_COMIC = BASE_URL + "%d/" + URL_ENDING;
     private static XkcdComic current;
     public static final int MAX = 2077;
 
@@ -18,53 +66,40 @@ public class XkcdDao {
         XkcdComic comic = null;
         try {
             String strUrl = NetworkAdapter.httpGetRequest(url);
-            JSONObject jsComic = new JSONObject(strUrl);
+            JSONObject jsComic = new JSONObject(NetworkAdapter.httpGetRequest(url));
             comic = new XkcdComic(jsComic);
 
             String urlString = comic.getImg();
-            if (urlString != null){
                 Bitmap bitmap;
-                bitmap = NetworkAdapter.httpImageRequest(urlString);
-                if (bitmap != null){
+                bitmap = NetworkAdapter.httpImageRequest(comic.getImg());
                     comic.setImage(bitmap);
-                }
-            }
 
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        current = comic;
         return comic;
     }
 
     public static XkcdComic getRecentComic() {
         XkcdComic comic = null;
-        comic = getComic(IMAGE_URL);
+        comic = getComic(CURRENT_URL);
         return comic;
     }
 
-    public static XkcdComic getNextComic() {
-        XkcdComic comic = null;
-        int num;
-        num = current.getNum();
-        if (num >= 0) {
-            num ++ ;
+    public static XkcdComic getNextComic(XkcdComic comic) {
+        int num = current.getNum() +1;
             String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(num));
             comic = getComic(url);
-        }
         return comic;
     }
 
     public static XkcdComic getPreviousComic() {
         XkcdComic comic = null;
         int num = current.getNum();
-        if (num > 0) {
-            num --;
+            num -= 1;
             String url = SPECIFIC_COMIC.replace("%d/", Integer.toString(num));
             comic = getComic(url);
-        }
+
         return comic;
     }
 
@@ -76,3 +111,4 @@ public class XkcdDao {
         return comic;
     }
 }
+*/
