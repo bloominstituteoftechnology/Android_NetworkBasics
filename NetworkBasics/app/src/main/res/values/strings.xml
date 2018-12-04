@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Network Basics</string>
+    <string name="next">next</string>
+    <string name="random">random</string>
+    <string name="previous">previous</string>
+    <string name="title">Title</string>
+</resources>
