@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         Log.i("Chrl","test" + comic.getTitle());
             title.setText(comic.getTitle());
             image.setImageBitmap(comic.getImage());
-            if (comic.getNum() == XkcdDao.MAX){
+            if (comic.getNum() == XkcdDao.maxComicNumber){
                 next.setEnabled(false);
 
             }else if (comic.getNum() == 1){
