@@ -105,9 +105,13 @@ public class MainActivity extends AppCompatActivity {
             image.setImageBitmap(comic.getImage());
             if (comic.getNum() == XkcdDao.maxComicNumber){
                 next.setEnabled(false);
-
-            }else if (comic.getNum() == 1){
+            }else {
+                next.setEnabled(true);
+            }
+            if (comic.getNum() == 1){
                 previous.setEnabled(false);
+            }else {
+                previous.setEnabled(true);
             }
         }
     }
