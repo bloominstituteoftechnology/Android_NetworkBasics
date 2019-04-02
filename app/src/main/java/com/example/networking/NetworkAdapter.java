@@ -24,26 +24,24 @@ public class NetworkAdapter {
             urlConnection.connect();
             responseCode = urlConnection.getResponseCode();
 
-            if(responseCode != HttpURLConnection.HTTP_OK){
-                //TODO: figure out the error code ad catch block (step 13)
-                IOException(ErrorCode);
+            if(responseCode == HttpURLConnection.HTTP_OK){
+                input =  urlConnection.getInputStream();
+                if(input!=null){
+                    InputStreamReader inputReader = new InputStreamReader(input);
+                    BufferedReader reader = new BufferedReader(inputReader);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while((line = reader.readLine())!=null){
+                        stringBuilder.append(line).append('\n');
+                    }
+                    result = stringBuilder.toString();
             }
-            input =  urlConnection.getInputStream();
-            if(input!=null){
-                InputStreamReader inputReader = new InputStreamReader(input);
-                BufferedReader reader = new BufferedReader(inputReader);
-                StringBuilder stringBuilder = new StringBuilder();
-                //TODO: possible issue with step 18 here
-                while(reader.readLine()!=null){
-                    stringBuilder.append(reader.readLine());
-                }
-                 result = stringBuilder.toString();
             }
-        }catch(Exception e){e.printStackTrace();}
+        }catch(IOException e){e.printStackTrace();}
         finally {
             if(input != null){
                 try{input.close();}
-                catch (Exception e){e.printStackTrace();}
+                catch (IOException e){e.printStackTrace();}
             }
             if(urlConnection!=null){
                 urlConnection.disconnect();
