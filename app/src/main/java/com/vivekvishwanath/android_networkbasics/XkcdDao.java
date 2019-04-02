@@ -11,6 +11,7 @@ public class XkcdDao {
     private static final String URL_ENDING = "info.0.json";
     private static final String RECENT_COMIC_URL = BASE_URL + URL_ENDING;
     private static final String SPECIFIC_COMIC_URL = BASE_URL + "%d/" + URL_ENDING;
+    public static int maxComicNumber;
 
     private static XkcdComic getComic(String urlString) {
         XkcdComic comic = null;
@@ -27,8 +28,10 @@ public class XkcdDao {
         return comic;
     }
 
-    public static XkcdComic getRecentComic(String urlString) {
-        return getComic(RECENT_COMIC_URL);
+    public static XkcdComic getRecentComic() {
+        XkcdComic comic = getComic(RECENT_COMIC_URL);
+        maxComicNumber = comic.getNum();
+        return comic;
     }
 
     public static XkcdComic getNextComic(XkcdComic comic) {
@@ -45,5 +48,10 @@ public class XkcdDao {
         return getComic(newComicUrl);
     }
 
-    
+    public static XkcdComic getRandomComic() {
+        int randomNum = (int) (Math.random() * maxComicNumber + 1);
+        String randomUrl = String.format(SPECIFIC_COMIC_URL, randomNum);
+        return getComic(randomUrl);
+    }
+
 }
