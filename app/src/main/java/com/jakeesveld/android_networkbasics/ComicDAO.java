@@ -56,7 +56,8 @@ public class ComicDAO {
     }
 
     public static Comic getRandom() {
-        int intRandomId = (int) Math.random() * getLatest().getId();
+        double doubRandomId = Math.random() * getLatest().getId();
+        int intRandomId = (int) doubRandomId;
         Integer randomId = intRandomId + 1;
         String result = NetworkAdapter.httpRequest(URL_PREFIX + randomId + "/" + URL_SUFFIX);
         Comic randomComic;

@@ -30,7 +30,7 @@ public class Comic {
         }
 
         try {
-            this.date = String.format("%s, %s, $s", json.getString("month"), json.getString("day"), json.getString("year"));
+            this.date = String.format("%s/%s/%s", json.getString("month"), json.getString("day"), json.getString("year"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
