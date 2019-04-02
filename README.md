@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project will have you interface with the simple API of a web comic [xkcd.com](). You will build a complete app which allows a user to browse the current and previous comics on this site.
+This project will have you interface with the simple API of a web comic [xkcd.com](https://www.xkcd.com/). You will build a complete app which allows a user to browse the current and previous comics on this site.
 
 ## Instructions
 
