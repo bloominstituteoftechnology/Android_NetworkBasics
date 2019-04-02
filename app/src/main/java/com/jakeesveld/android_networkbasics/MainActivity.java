@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import static com.jakeesveld.android_networkbasics.NetworkAdapter.httpRequest;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +21,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String result = NetworkAdapter.httpRequest("https://xkcd.com/info.0.json");
+                            Log.i(getLocalClassName(), result);
+                        }
+                    }).start();
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
