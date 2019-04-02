@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">XKCD Comics Viewer</string>
+    <string name="TextViewDetailsSample">Sample Data and ID</string>
+    <string name="TextViewTitleSample">Sample Name of comic</string>
+    <string name="MenuPrevious">Previous</string>
+    <string name="MenuRandom">Random</string>
+    <string name="MenuNext">Next</string>
+</resources>

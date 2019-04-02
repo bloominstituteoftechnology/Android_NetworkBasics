@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_previous"
+        android:icon="@drawable/ic_arrow_back_black_24dp"
+        android:title="@string/MenuPrevious" />
+
+    <item
+        android:id="@+id/navigation_random"
+        android:icon="@drawable/ic_all_inclusive_black_24dp"
+        android:title="@string/MenuRandom" />
+
+    <item
+        android:id="@+id/navigation_next"
+        android:icon="@drawable/ic_arrow_forward_black_24dp"
+        android:title="@string/MenuNext" />
+
+</menu>
