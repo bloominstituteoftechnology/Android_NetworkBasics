@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Log.i(getPackageName(), NetworkAdapter.httpRequest("https://xkcd.com/info.0.json", ""));
+                Log.i(getPackageName(), NetworkAdapter.httpRequest("https://xkcd.com/info.0.json"));
             }
         }).start();
     }

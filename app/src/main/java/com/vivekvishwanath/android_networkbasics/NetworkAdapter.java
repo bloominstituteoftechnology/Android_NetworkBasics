@@ -15,7 +15,7 @@ public class NetworkAdapter {
 
     private static final int TIMEOUT = 3000;
 
-    public static String httpRequest(String urlString, String requestType) {
+    public static String httpRequest(String urlString) {
         String result = "";
         InputStream inputStream = null;
         HttpURLConnection connection = null;
@@ -84,8 +84,10 @@ public class NetworkAdapter {
             } else { throw new IOException(Integer.toString(responseCode)); }
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         } finally {
             if (inputStream != null) {
                 try {
