@@ -1,5 +1,6 @@
 package com.rybarstudios.comicviewer;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 String result = NetworkAdapter.httpGetRequest("https://xkcd.com/info.0.json");
-                Log.i("Tag", result);
+//                Log.i("Tag", result);
+                Bitmap img = NetworkAdapter.httpImageRequest("https://xkcd.com/info.0.json");
+                Log.i("Tag", img.toString());
             }
         }).start();
 
