@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         textViewTitle.setText(comic.getTitle());
         imageViewComic.setImageBitmap(comic.getImage());
         imageViewComic.setAdjustViewBounds(true);
-
     }
 
 }
