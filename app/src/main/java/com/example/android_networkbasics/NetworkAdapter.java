@@ -1,5 +1,8 @@
 package com.example.android_networkbasics;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +14,10 @@ import java.net.URL;
 public class NetworkAdapter {
 
     public static final int TIMEOUT = 3000;
+
+    public static String httpRequest(String urlString){
+        return httpRequest(urlString,null);
+    }
 
     public static String httpRequest(String urlString, String requestType){
         String result = "";
@@ -63,4 +70,42 @@ public class NetworkAdapter {
 
     }
 
+    public static Bitmap httpImageRequest(String urlString) {
+        Bitmap result = null;
+        InputStream stream = null;
+        HttpURLConnection connection = null;
+
+        try {
+            URL url = new URL(urlString);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(TIMEOUT);
+            connection.setReadTimeout(TIMEOUT);
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                stream = connection.getInputStream();
+                if (stream != null) {
+                     result = BitmapFactory.decodeStream(stream);
+                }
+
+
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+        return result;
+    }
 }
