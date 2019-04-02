@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.stream.Stream;
 
 public class NetworkAdapter {
+        public static final int TIMEOUT = 3000;
 
     public static String httpGetRequest(final String urlString) {
         String result = "";
@@ -19,6 +20,8 @@ public class NetworkAdapter {
         try {
             URL url = new URL(urlString);
             connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(TIMEOUT);
+            connection.setReadTimeout(TIMEOUT);
             connection.connect();
 
             int responseCode = connection.getResponseCode();

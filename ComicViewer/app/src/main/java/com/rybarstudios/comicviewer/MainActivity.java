@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String result = NetworkAdapter.httpGetRequest("https://dog.ceo/api/breeds/list/all");
+                String result = NetworkAdapter.httpGetRequest("https://xkcd.com/info.0.json");
                 Log.i("Tag", result);
             }
         }).start();
