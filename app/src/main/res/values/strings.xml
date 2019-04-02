@@ -3,4 +3,9 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="TextViewDetailsSample">Sample Data and ID</string>
+    <string name="TextViewTitleSample">Sample Name of comic</string>
+    <string name="MenuPrevious">Previous</string>
+    <string name="MenuRandom">Random</string>
+    <string name="MenuNext">Next</string>
 </resources>
