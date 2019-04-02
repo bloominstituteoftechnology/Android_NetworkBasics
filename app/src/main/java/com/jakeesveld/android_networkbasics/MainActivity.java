@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            String result = NetworkAdapter.httpRequest("https://xkcd.com/info.0.json");
-                            Log.i(getLocalClassName(), result);
+                            Comic result = ComicDAO.getLatest();
+                            Log.i(getLocalClassName(), result.getTitle());
                         }
                     }).start();
                     return true;
