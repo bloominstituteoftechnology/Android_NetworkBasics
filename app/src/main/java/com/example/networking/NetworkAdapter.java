@@ -1,53 +1,121 @@
 package com.example.networking;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 
 public class NetworkAdapter {
-    static int TIMEOUT = 3000;
 
+    public static final int READ_TIMEOUT = 3000;
+    public static final int CONNECT_TIMEOUT = 3000;
 
-    public static String httpRequest(String urlString){
+    static String httpRequest(String urlString){
+        return httpRequest(urlString, null);
+    }
+
+    static String httpRequest(String urlString, Map<String, String> headerProperties) {
         String result = "";
-        InputStream input = null;
-        HttpURLConnection urlConnection = null;
-        int responseCode;
-        try{
+        InputStream inputStream = null;
+        HttpURLConnection connection = null;
+
+        try {
             URL url = new URL(urlString);
-            urlConnection = (HttpURLConnection)url.openConnection();
-            urlConnection.setReadTimeout(TIMEOUT);
-            urlConnection.setConnectTimeout(TIMEOUT);
-            urlConnection.connect();
-            responseCode = urlConnection.getResponseCode();
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(CONNECT_TIMEOUT);
+            connection.setReadTimeout(READ_TIMEOUT);
 
-            if(responseCode == HttpURLConnection.HTTP_OK){
-                input =  urlConnection.getInputStream();
-                if(input!=null){
-                    InputStreamReader inputReader = new InputStreamReader(input);
-                    BufferedReader reader = new BufferedReader(inputReader);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while((line = reader.readLine())!=null){
-                        stringBuilder.append(line).append('\n');
+            if(headerProperties!=null) {
+                for(Map.Entry<String, String> entry : headerProperties.entrySet()){
+                    connection.setRequestProperty(entry.getKey(), entry.getValue());
+                }
+            }
+            connection.connect();
+
+            final int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                inputStream = connection.getInputStream();
+                if (inputStream != null) {
+                    InputStreamReader isReader = new InputStreamReader(inputStream);
+                    BufferedReader reader = new BufferedReader(isReader);
+                    StringBuilder builder = new StringBuilder();
+
+                    String line = reader.readLine();
+                    while(line != null){
+                        builder.append(line);
+                        line = reader.readLine();
                     }
-                    result = stringBuilder.toString();
-            }
-            }
-        }catch(IOException e){e.printStackTrace();}
-        finally {
-            if(input != null){
-                try{input.close();}
-                catch (IOException e){e.printStackTrace();}
-            }
-            if(urlConnection!=null){
-                urlConnection.disconnect();
-            }
-            return result;
-        }
+                    result = builder.toString();
 
+                }
+            } else {
+                throw new IOException();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            result = "MALFORMED EXCEPTION";
+        } catch (IOException e) {
+            e.printStackTrace();
+            result = "IOEXCEPTION";
+        } finally {
+            if(inputStream != null) {
+                try{
+                    inputStream.close();}
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection != null){
+                connection.disconnect();
+            }}
+        return result;
+    }
+
+
+    public static Bitmap httpImageRequest(String string){
+        InputStream inputStream = null;
+        HttpURLConnection connection = null;
+        Bitmap result =  null;
+
+        try {
+            URL url = new URL(string);
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setConnectTimeout(CONNECT_TIMEOUT);
+            connection.setReadTimeout(READ_TIMEOUT);
+
+            connection.connect();
+
+            final int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                inputStream = connection.getInputStream();
+                if (inputStream != null) {
+                    result = BitmapFactory.decodeStream(inputStream);
+                }
+            } else {
+                throw new IOException();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if(inputStream != null) {
+                try{
+                    inputStream.close();}
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+            if(connection != null){
+                connection.disconnect();
+            }}
+        return result;
     }
 }
