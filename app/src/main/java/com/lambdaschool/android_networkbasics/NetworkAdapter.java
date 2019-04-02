@@ -1,5 +1,8 @@
 package com.lambdaschool.android_networkbasics;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,5 +60,42 @@ public class NetworkAdapter {
             }
         }
         return httpResult;
+    }
+
+    public static Bitmap httpImageRequest(String url) {
+        Bitmap httpImageResult = null;
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+
+        try {
+            URL urlObject = new URL(url);
+            httpURLConnection = (HttpURLConnection) urlObject.openConnection();
+            httpURLConnection.setReadTimeout(READ_TIMEOUT);
+            httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT);
+            httpURLConnection.connect();
+            int responseCode = httpURLConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                inputStream = httpURLConnection.getInputStream();
+                httpImageResult = BitmapFactory.decodeStream(inputStream);
+            } else {
+                throw new IOException("Connection failed (" + responseCode + ")");
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
+        }
+        return httpImageResult;
     }
 }
