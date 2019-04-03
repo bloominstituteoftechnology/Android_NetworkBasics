@@ -1,13 +1,20 @@
 package com.example.android_networkbasics;
 
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,12 +25,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final XkcdComic xkcdComic = XkcdDao.getRecentComic();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateUi(xkcdComic);
+                    }
+                });
+
+            }
+        }).start();
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final XkcdComic randXkcdComic = XkcdDao.getRandomComic();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                updateUi(randXkcdComic);
+                            }
+                        });
+                    }
+                }).start();
             }
         });
     }
@@ -49,4 +80,12 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void updateUi(XkcdComic xkcdComic) {
+        ImageView imageView = findViewById(R.id.image_view_comic);
+        imageView.setImageBitmap(xkcdComic.getBitmap());
+
+    }
 }
+
+

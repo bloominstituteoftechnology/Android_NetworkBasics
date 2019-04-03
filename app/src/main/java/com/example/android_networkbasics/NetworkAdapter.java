@@ -1,5 +1,9 @@
 package com.example.android_networkbasics;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +18,49 @@ public class NetworkAdapter {
     public static final int CONNECT_TIMEOUT = 3000;
     public static final int READ_TIMEOUT = 3000;
 
+    static Bitmap httpImageRequest(String stringUri) {
+        InputStream inputStream = null;
+        HttpURLConnection httpURLConnection = null;
+        Bitmap imgBitmap = null;
+
+        try {
+            URL url = new URL(stringUri);
+            httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT);
+            httpURLConnection.setReadTimeout(READ_TIMEOUT);
+
+            httpURLConnection.connect();
+
+            final int responseCode = httpURLConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                inputStream = httpURLConnection.getInputStream();
+                if (inputStream != null) {
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream);
+                    imgBitmap = BitmapFactory.decodeStream(bufferedInputStream);
+                } else {
+                    throw new IOException();
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
+        }
+        return imgBitmap;
+    }
+
     static String httpRequest(String stringUri) {
         return httpRequest(stringUri, null);
     }
@@ -26,7 +73,6 @@ public class NetworkAdapter {
         try {
             URL url = new URL(stringUri);
             httpURLConnection = (HttpURLConnection) url.openConnection();
-            //inputStream = (InputStream) httpURLConnection;
             httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT);
             httpURLConnection.setReadTimeout(READ_TIMEOUT);
 
@@ -50,7 +96,7 @@ public class NetworkAdapter {
                     String line = reader.readLine();
                     while (line != null) {
                         builder.append(line);
-                        reader.readLine();
+                        line = reader.readLine();
                     }
 
                     result = builder.toString();
