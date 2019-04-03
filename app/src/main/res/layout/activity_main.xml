@@ -55,7 +55,7 @@
             <ImageView
                 android:id="@+id/image_view_comic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="473dp"
                 tools:srcCompat="@tools:sample/avatars[2]" />
         </LinearLayout>
     </ScrollView>
