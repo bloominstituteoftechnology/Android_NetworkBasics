@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/previous_button"
-        android:title="Previous" />
+        android:title="@string/title_previous" />
 
     <item
         android:id="@+id/random_button"
-        android:title="Random" />
+        android:title="@string/title_random" />
 
     <item
         android:id="@+id/next_button"
-        android:title="Next" />
+        android:title="@string/title_next" />
 
 </menu>
