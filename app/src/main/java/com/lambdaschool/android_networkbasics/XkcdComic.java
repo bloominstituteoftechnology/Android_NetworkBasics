@@ -175,7 +175,7 @@ public class XkcdComic {
 
     @Override
     public String toString() {
-        return "ClassPojo [news = " + news + ", img = " + img + ", transcript = " + transcript + ", month = " + month + ", year = " + year + ", num = " + num + ", link = " + link + ", alt = " + alt + ", title = " + title + ", day = " + day + ", safe_title = " + safe_title + "]";
+        return "[title = " + title + ", news = " + news + ", img = " + img + ", month = " + month + ", year = " + year + ", num = " + num + ", link = " + link + ", alt = " + alt + ", day = " + day + "]";
     }
 }
 

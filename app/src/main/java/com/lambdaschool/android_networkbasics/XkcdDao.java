@@ -53,4 +53,8 @@ public class XkcdDao {
 
         return getComic(String.format(Locale.US, URL_SPECIFIC, randomNum));
     }
+
+    public static XkcdComic getSpecificComic(String comicNum) {
+        return getComic(URL_BASE + comicNum + "/" + URL_ENDING);
+    }
 }
