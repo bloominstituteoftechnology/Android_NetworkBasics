@@ -9,6 +9,7 @@
     tools:showIn="@layout/activity_main">
 
     <ImageView
+        android:adjustViewBounds="false"
         android:contentDescription="xkcd comic image"
         android:id="@+id/image_view_comic"
         android:layout_width="match_parent"

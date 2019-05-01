@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         final XkcdComic randXkcdComic = XkcdDao.getRandomComic();
+
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     public void updateUi(XkcdComic xkcdComic) {
         ImageView imageView = findViewById(R.id.image_view_comic);
         imageView.setImageBitmap(xkcdComic.getBitmap());
-
     }
 }
 
