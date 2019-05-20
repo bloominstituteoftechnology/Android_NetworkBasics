@@ -1,3 +1,4 @@
+Spencer Stock
 # Network Basics
 
 ## Introduction
